@@ -19,5 +19,18 @@
       color: black;
       border: 1px solid black;
     }
+
+    &.google-button
+    {
+    background-color: rgb(50, 102, 197);
+    color: white;
+
+    &:hover
+    {
+      background-color: rgb(35, 91, 194);
+      color: white;
+      border: none;
+    }
+    }
   }
   
