@@ -5,7 +5,7 @@ import {setCurrentUser} from './redux/user/user.actions';
 import Homepage from './pages/homepage/home';
 import ShopPage from './pages/shop-page/shopPage.component';
 import SignPage from './pages/sign-page/sign.component';
-import Header from './components/header/header.component';
+import Header from './components/navigation/header/header.component';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {auth,createUserProfile} from './firebase/firebase.utils';
 

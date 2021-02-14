@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {ReactComponent as Logo} from '../../assets/crown.svg';
+import {ReactComponent as Logo} from '../../../assets/crown.svg';
 import './header.styles.scss';
-import {auth} from '../../firebase/firebase.utils';
+import {auth} from '../../../firebase/firebase.utils';
+import Cart from '../cart/cart.component';
 
 const Header = ({currentUser}) => (
     <div className="header">
@@ -11,6 +12,7 @@ const Header = ({currentUser}) => (
              <Logo className='logo'/>
          </Link>
          <div className="options">
+              <Cart/>
               <Link className="option" to='/shop'>SHOP</Link>
               <Link to="/" className="option">CONTACT</Link>
              
