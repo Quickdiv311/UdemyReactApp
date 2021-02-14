@@ -3,6 +3,7 @@ import './sign-in.styles.scss';
 import FormInput from '../form-input//form-input.component';
 import Button from '../button/button.component';
 import {auth, signInWithGoogle} from '../../firebase/firebase.utils';
+// import { FcGoogle } from 'react-icons/fc';
 
 class SignIn extends React.Component
 {
@@ -52,7 +53,7 @@ class SignIn extends React.Component
                     <FormInput type="password" name="password" handleChange={this.handleChange} label="password" value={password} required/>
                     <div className="buttons">
                     <Button type="submit">SIGN IN</Button>
-                    <Button onClick={signInWithGoogle} isGoogleSignIn>SIGN IN WITH GOOGLE</Button>
+                    <Button onClick={signInWithGoogle} isGoogleSignIn>GOOGLE  SIGN IN</Button>
                     </div>
                 </form>
             </div>
