@@ -1,7 +1,8 @@
 import {userTypes} from './user.types';
 
 const initialState = {
-    currentUser: null
+    currentUser: null,
+    cart : []
 }
 
 const userReducer = (state = initialState, action) => {
