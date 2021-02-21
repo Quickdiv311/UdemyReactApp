@@ -10,17 +10,18 @@ const CollectionsPage = ({collection}) => {
 
     return(
     <div className="collections-page">
-        <h1 className="title">{title.toUpperCase()}</h1>
+        <h1 className="title">{title}</h1>
         <div className="items">
             {
                 items.map(item => (<CollectionItem key={item.id} item={item}/>))
             }
         </div>
     </div>
-)}
+)
+}
 
-const mapStateToProps = (state, collectionProps) => ({
-    collection: selectCollection(collectionProps.match.params.collectionId)(state)
+const mapStateToProps = (state, ownProps) => ({
+    collection: selectCollection(ownProps.match.params.collectionId)(state)
 }) 
 
 export default connect(mapStateToProps)(CollectionsPage);

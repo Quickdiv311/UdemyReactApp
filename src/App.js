@@ -12,6 +12,7 @@ import CheckoutPage from './pages/checkoutPage/checkoutPage.component';
 import Header from './components/navigation/header/header.component';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import {auth,createUserProfile} from './firebase/firebase.utils';
+import { selectCollectionsPreview } from './redux/shop/shop.selectors';
 
 class App extends React.Component 
 {
@@ -35,7 +36,10 @@ class App extends React.Component
             })
            }
            setUser(userAuth)
-    })   
+
+    }) 
+    
+    
   }
 
   componentWillUnmount()
@@ -63,11 +67,12 @@ class App extends React.Component
 
 const mapStateToProps =  createStructuredSelector({
   user: selectCurrentUser,
-  count: cartCount
+  count: cartCount,
+  collections: selectCollectionsPreview
 })
 
 const mapDispatchToProps = dispatch => ({
-   setUser: user => dispatch(setCurrentUser(user))
+   setUser: user => dispatch(setCurrentUser(user)),
 })
 
 export default connect(mapStateToProps ,mapDispatchToProps)(App);
