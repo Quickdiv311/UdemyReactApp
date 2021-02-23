@@ -2,38 +2,42 @@ import React from 'react';
 import {Route} from 'react-router-dom';
 import CollectionsPage from '../CollectionsPage/collections.component';
 import CollectionView from '../../components/shopPage/collection-view/collection-view.component';
-import { firestore, pullFromServer } from '../../firebase/firebase.utils';
 import {connect} from 'react-redux';
-import {updateCollections} from '../../redux/shop/shop.action';
+import {createStructuredSelector} from 'reselect';
+import {selectIsFetching} from '../../redux/shop/shop.selectors';
+import Spin from '../../components/common/spin/spin.component';
+import {startFetchinCollectionsAsync} from '../../redux/shop/shop.action';
+
+const ViewSpin = Spin(CollectionView);
+const CollectionSpin = Spin(CollectionsPage);
 
 class ShopPage extends React.Component  
 {
-  unsub = null;
-
+  
   componentDidMount()
   {
-    const {putData} = this.props;
-    const collectionRef = firestore.collection('collections');
-    this.unsub = collectionRef.onSnapshot(async snapShot => {
-       const collections = pullFromServer(snapShot);
-       putData(collections);
-    })
+       const {putData} = this.props;
+       putData();
   }
 
   render()
   {
-     const {match} = this.props;
+     const {match, loading} = this.props;
 
      return(
       <div className="shop-page">
-         <Route exact path={`${match.path}`} component={CollectionView}/>
-         <Route path={`${match.path}/:collectionId`} component={CollectionsPage}/>
+         <Route exact path={`${match.path}`} render={props => (<ViewSpin isLoading={loading} {...props}/>)}/>
+         <Route path={`${match.path}/:collectionId`} render={props => (<CollectionSpin isLoading={loading} {...props}/>)}/>
       </div>)
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-   putData: collections => dispatch(updateCollections(collections))
+const mapStateToProps = createStructuredSelector({
+   loading: selectIsFetching
 })
 
-export default connect(null,mapDispatchToProps)(ShopPage);
+const mapDispatchToProps = dispatch => ({
+   putData: () => dispatch(startFetchinCollectionsAsync())
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(ShopPage);
