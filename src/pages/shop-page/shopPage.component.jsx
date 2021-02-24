@@ -1,15 +1,9 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-import CollectionsPage from '../CollectionsPage/collections.component';
-import CollectionView from '../../components/shopPage/collection-view/collection-view.component';
+import CollectionsPageContainer from '../CollectionsPage/collections.component';
+import CollectionViewContainer from '../../components/shopPage/collection-view/collection-view.component';
 import {connect} from 'react-redux';
-import {createStructuredSelector} from 'reselect';
-import {selectIsFetching} from '../../redux/shop/shop.selectors';
-import Spin from '../../components/common/spin/spin.component';
-import {startFetchinCollectionsAsync} from '../../redux/shop/shop.action';
-
-const ViewSpin = Spin(CollectionView);
-const CollectionSpin = Spin(CollectionsPage);
+import {startFetchinCollections} from '../../redux/shop/shop.action';
 
 class ShopPage extends React.Component  
 {
@@ -22,22 +16,18 @@ class ShopPage extends React.Component
 
   render()
   {
-     const {match, loading} = this.props;
+     const {match} = this.props;
 
      return(
       <div className="shop-page">
-         <Route exact path={`${match.path}`} render={props => (<ViewSpin isLoading={loading} {...props}/>)}/>
-         <Route path={`${match.path}/:collectionId`} render={props => (<CollectionSpin isLoading={loading} {...props}/>)}/>
+         <Route exact path={`${match.path}`} component={CollectionViewContainer}/>
+         <Route path={`${match.path}/:collectionId`} component={CollectionsPageContainer}/>
       </div>)
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-   loading: selectIsFetching
-})
-
 const mapDispatchToProps = dispatch => ({
-   putData: () => dispatch(startFetchinCollectionsAsync())
+   putData: () => dispatch(startFetchinCollections())
 })
 
-export default connect(mapStateToProps,mapDispatchToProps)(ShopPage);
+export default connect(null,mapDispatchToProps)(ShopPage);

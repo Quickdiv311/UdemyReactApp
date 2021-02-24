@@ -18,3 +18,7 @@ export const reduceQuantity = item => ({
     type: CartType.ReduceQuantity,
     payload: item
 })
+
+export const clearCart = () => ({
+    type: CartType.ClearCart
+})
