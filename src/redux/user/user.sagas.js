@@ -44,7 +44,7 @@ export function* checkUserAsync()
 {
   try
   {
-     const userAuth = getCurrentUser();
+     const userAuth = yield getCurrentUser();
      if(!userAuth) return;
      yield signInFunc(userAuth);
   }

@@ -44,7 +44,7 @@ export const signUpStart = (userCred) => ({
 })
 
 
-export const signUpSuccess = (user, data) => ({
+export const signUpSuccess = ({user, data}) => ({
     type: userTypes.SignUpSuccess,
     payload: {user, data}
 })

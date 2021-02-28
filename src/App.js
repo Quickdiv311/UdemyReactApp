@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, {useEffect}from 'react';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import {selectCurrentUser} from './redux/user/user.selectors';
@@ -13,38 +13,24 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import { selectCollectionsPreview } from './redux/shop/shop.selectors';
 import {checkUser} from './redux/user/user.actions';
 
-class App extends React.Component 
+const App = ({checkUser,user, count}) => 
 {
+
+  useEffect(() => {
+    checkUser();
+  }, [checkUser])
   
-  unsubscribe = null;
-
-  componentDidMount()
-  {
-    const {checkUser} = this.props;
-    checkUser()
-  }
-
-  componentWillUnmount()
-  {
-    this.unsubscribe();
-  }
-
-  render()
-  {
-    const {user, count} = this.props;
-
   return (
    <div className='appname'>
      <Header/>
      <Switch>
-       <Route exact path='/' component={Homepage}/>
+         <Route exact path='/' component={Homepage}/>
        <Route path='/shop' component={ShopPage}/>
        <Route exact path='/checkout' render = {() => !count ? (<Redirect to='/shop'/>) : (<CheckoutPage/>)}/>
        <Route path='/sign' render = {() => user ? (<Redirect to='/'/>) : (<SignPage/>)}/>
      </Switch>
    </div>
   )
-}
 }
 
 const mapStateToProps =  createStructuredSelector({
@@ -81,3 +67,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 
     // }) 
     
+        /* <Route exact path='/' render = {() => !user ? (<Redirect to='/home'/>) : (<Homepage/>)}/>
+       <Route path='/shop' render = {() => !user ? (<Redirect to='/sign'/>) : (<ShopPage/>)}/> */
