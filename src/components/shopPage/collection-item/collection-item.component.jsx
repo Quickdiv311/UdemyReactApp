@@ -1,10 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import {selectCurrentUser} from '../../../redux/user/user.selectors';
 import {addItem} from '../../../redux/cart/cart.actions';
 import './collection-item.styles.scss';
 import Button from '../../common/button/button.component';
 
-const CollectionItem = ({item, addItem}) => {
+const CollectionItem = ({item, addItem, user}) => {
    
     const {name, price, imageUrl} = item;
      
@@ -15,7 +17,12 @@ const CollectionItem = ({item, addItem}) => {
             <span className="name">{name.toUpperCase()}</span>
             <span className="price">${price}</span>
         </div>
-        <Button inverted onClick={() => addItem(item)}>ADD TO CART</Button>
+        {
+            user ?
+        (<Button inverted onClick={() => addItem(item)}>ADD TO CART</Button>)
+        :
+        null
+        }
     </div>
 )}
 
@@ -23,4 +30,8 @@ const mapDispatchToProps = dispatch => ({
     addItem: item => dispatch(addItem(item))
 })
 
-export default connect(null,mapDispatchToProps)(CollectionItem);
+const mapStateToProps = createStructuredSelector({
+    user: selectCurrentUser
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(CollectionItem);
