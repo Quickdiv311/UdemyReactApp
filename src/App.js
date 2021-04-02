@@ -15,7 +15,6 @@ import {checkUser} from './redux/user/user.actions';
 
 const App = ({checkUser,user, count}) => 
 {
-  
 
   useEffect(() => {
     checkUser();
